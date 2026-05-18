@@ -1,0 +1,35 @@
+<!-- add_volunteer.html -->
+{% load widget_tweaks %}
+<html>
+<head>
+  <title>Add Volunteer</title>
+</head>
+<body>
+
+<form method="post">
+{% csrf_token %}
+<div class="note">
+  <p>New Volunteer</p>
+</div>
+
+<div class="form-content">
+  <div class="row">
+    <div class="col-md-6">
+      {% render_field form1.first_name class="form-control" placeholder="First Name" %}
+      {% render_field form1.username class="form-control" placeholder="Username" %}
+      {% render_field form2.mobile class="form-control" placeholder="Mobile" %}
+    </div>
+
+    <div class="col-md-6">
+      {% render_field form1.last_name class="form-control" placeholder="Last Name" %}
+      {% render_field form1.password class="form-control" placeholder="Password" %}
+      {% render_field form2.address class="form-control" placeholder="Address" %}
+    </div>
+  </div>
+
+  <button type="submit">Add Volunteer</button>
+</div>
+</form>
+
+</body>
+</html>

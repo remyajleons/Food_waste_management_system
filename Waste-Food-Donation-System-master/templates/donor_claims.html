@@ -1,0 +1,97 @@
+{% extends 'donarbase.html' %}
+{% block content %}
+
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<style>
+    body{
+        font-family: Arial;
+        background:#f4f6f8;
+        text-align:center;
+    }
+    .card{
+        background:white;
+        padding:20px;
+        margin:20px auto;
+        width:60%;
+        border-radius:10px;
+        box-shadow:0 0 10px rgba(0,0,0,0.1);
+    }
+    .status{
+        font-weight:bold;
+        font-size:18px;
+    }
+    .time{
+        color:#555;
+        font-size:14px;
+    }
+    button{
+        padding:10px 20px;
+        background:#28a745;
+        color:white;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+    }
+</style>
+
+<h2>Donation Tracking & NGO Requests</h2>
+
+{% if claims %}
+    {% for claim in claims %}
+    <div class="card">
+        <p><b>NGO:</b> {{ claim.ngo.get_name }}</p>
+        <p><b>Food:</b> {{ claim.foodName }}</p>
+        <p><b>Pickup Address:</b> {{ claim.address }}</p>
+
+        <!-- ✅ SYNOPSIS TRACKING START -->
+        <p class="status">
+            Status :
+            {% if claim.donation.status == 'LISTED' %}
+                Listed
+            {% elif claim.donation.status == 'CLAIMED' %}
+                Claimed by NGO
+            {% elif claim.donation.status == 'PICKED_UP' %}
+                Picked Up by Volunteer
+            {% elif claim.donation.status == 'DELIVERED' %}
+                Delivered to NGO
+            {% endif %}
+        </p>
+
+        <p>
+<strong>Picked Up Time:</strong>
+{% if claim.donation.pickup_time %}
+    {{ claim.donation.pickup_time }}
+{% else %}
+    Not yet picked
+{% endif %}
+</p>
+
+<p>
+<strong>Delivered Time:</strong>
+{% if claim.donation.delivery_time %}
+    {{ claim.donation.delivery_time }}
+{% else %}
+    Not yet delivered
+{% endif %}
+</p>
+        <!-- ✅ SYNOPSIS TRACKING END -->
+
+        <!-- PAYMENT -->
+        {% if not claim.is_paid %}
+            <a href="{% url 'make-payment' claim.id %}">
+                <button>Make Payment</button>
+            </a>
+        {% else %}
+            <p style="color:green;font-weight:bold;">Payment Completed</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No claims available at the moment.</p>
+{% endif %}
+
+{% endblock content %}

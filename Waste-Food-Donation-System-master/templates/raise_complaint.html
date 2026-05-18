@@ -1,0 +1,15 @@
+{% extends 'donarbase.html' %}
+{% block content %}
+
+<div style="width:50%;margin:40px auto;background:white;padding:20px;border-radius:10px;">
+    <h2>Raise a Complaint</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="message" rows="5" style="width:100%;" placeholder="Enter your complaint here..." required></textarea>
+        <br><br>
+        <button type="submit">Submit Complaint</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'donarbase.html' %}
+{% block content %}
+
+<h2 style="text-align:center;">My Complaints</h2>
+
+{% for c in complaints %}
+<div style="width:60%;margin:20px auto;background:white;padding:15px;border-radius:8px;">
+    <p><b>Date:</b> {{ c.created_at }}</p>
+    <p><b>Message:</b> {{ c.message }}</p>
+
+    <p>
+        <b>Status:</b>
+        {% if c.status == 'Pending' %}
+            <span style="color:red;">Pending</span>
+        {% else %}
+            <span style="color:green;">Resolved</span>
+        {% endif %}
+    </p>
+
+    {% if c.reply %}
+    <div style="margin-top:10px;padding:10px;background:#e8f5e9;border-radius:6px;">
+        <b>Reply from Admin:</b>
+        <p>{{ c.reply }}</p>
+    </div>
+    {% endif %}
+</div>
+{% empty %}
+<p style="text-align:center;">No complaints raised.</p>
+{% endfor %}
+
+{% endblock %}

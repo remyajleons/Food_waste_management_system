@@ -1,0 +1,86 @@
+{% extends 'ngobase.html' %}
+{% load static %}
+
+{% block content %}
+
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <style type="text/css">
+    .card-content {
+      display: flex;
+      margin-bottom: 5px;
+    }
+    .card-text {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+
+{% for message in messages %}
+<div class="alert alert-primary" role="alert" style="text-align: center;">
+  {{ message }}
+</div>
+{% endfor %}
+
+<div class="container register-form">
+  <div class="form">
+    <div class="note">
+      <p style="color: #4682B4; font-weight: bold; font-size: 20px;">AVAILABLE DONATIONS</p>
+    </div>
+
+    <div class="row" style="margin-left: 23px;">
+      {% for d in donations %}
+      <div class="card" style="width: 18rem; margin-left: 50px; margin-bottom: 30px;">
+        {% if d.foodImage %}
+        <img src="{{ d.foodImage.url }}" class="card-img-top" alt="Food Image" style="height: 170px;">
+        {% else %}
+        <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default Image" style="height: 170px;">
+        {% endif %}
+
+        <div class="card-body">
+          <h5 class="card-title">{{ d.companyName }}</h5>
+
+          <div class="card-content">
+            <h6 class="card-title">Food Name:</h6>
+            <p class="card-text">{{ d.foodName }}</p>
+          </div>
+          <div class="card-content">
+            <h6 class="card-title">Category:</h6>
+            <p class="card-text">{{ d.food_category }}</p>
+          </div>
+          <div class="card-content">
+            <h6 class="card-title">Quantity:</h6>
+            <p class="card-text">{{ d.quantity }}</p>
+          </div>
+          <div class="card-content">
+            <h6 class="card-title">Hours Passed:</h6>
+            <p class="card-text">{{ d.hours }}</p>
+          </div>
+          <div class="card-content">
+            <h6 class="card-title">Contact No.:</h6>
+            <p class="card-text">{{ d.number }}</p>
+          </div>
+          <div class="card-content">
+            <h6 class="card-title">Address:</h6>
+            <p class="card-text">{{ d.address }}</p>
+          </div>
+          <p class="card-text">{{ d.description }}</p>
+
+          
+
+         {% if d.status == 'CLAIMED' %}
+    <button class="btn btn-danger">Already Claimed</button>
+{% else %}
+    <a href="{% url 'claim-donation' d.id %}" class="btn btn-success">Claim</a>
+{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

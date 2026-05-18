@@ -1,0 +1,69 @@
+{% extends 'donarbase.html' %}
+
+{% block content %}
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+{% for message in messages %}
+<div class="alert alert-primary" role="alert" style="text-align:center;">
+  {{ message }}
+</div>
+{% endfor %}
+
+<div class="note">
+  <p style="color:#4682B4;font-weight:bold;font-size:20px;">DONATE FOOD</p>
+</div>
+
+<form method="POST" enctype="multipart/form-data" class="row g-3" style="margin:10px;">
+  {% csrf_token %}
+
+  <div class="col-12">
+    <label>Address</label>
+    <input type="text" class="form-control" name="address" required>
+  </div>
+
+
+
+  <div class="col-md-6">
+    <label>Food Name</label>
+    <input type="text" class="form-control" name="foodName" required>
+  </div>
+
+  <div class="col-md-6">
+    <label>Food Image</label>
+    <input type="file" class="form-control" name="foodImage">
+  </div>
+
+  <div class="col-md-6">
+    <label>Category</label>
+    <select class="form-select" name="food_category" required>
+      <option value="Veg">Veg</option>
+      <option value="Non-Veg">Non-Veg</option>
+      <option value="Packed">Packed</option>
+      <option value="Raw">Raw</option>
+    </select>
+  </div>
+
+  <div class="col-md-6">
+    <label>Quantity (1–100 kg)</label>
+    <input type="number" class="form-control" name="quantity" min="1" max="100" required>
+  </div>
+
+  <div class="col-md-6">
+    <label>Hours Passed (≤ 6)</label>
+    <input type="number" class="form-control" name="hours" min="1" max="6" required>
+  </div>
+
+  <div class="col-12">
+    <label>Description</label>
+    <input type="text" class="form-control" name="description">
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Submit Donation</button>
+  </div>
+</form>
+
+{% endblock %}

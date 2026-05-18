@@ -1,0 +1,23 @@
+{% extends 'ngobase.html' %}
+{% block content %}
+
+<h2 style="text-align:center;">Claimed Donations</h2>
+
+<table border="1" style="width:80%;margin:auto;text-align:center;">
+<tr>
+  <th>Food</th>
+  <th>Donor</th>
+  <th>Status</th>
+</tr>
+
+{% for c in claims %}
+<tr>
+  <td>{{ c.foodName }}</td>
+  <td>{{ c.donation.username }}</td>
+  <td>{{ c.donation.status }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}
