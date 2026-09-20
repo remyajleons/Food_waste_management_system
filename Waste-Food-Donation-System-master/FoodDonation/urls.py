@@ -27,7 +27,7 @@ admin.site.index_title = "Welcome to Zero Food Researcher Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.home_view,name=''),
+    path('',views.home_view,name='home'),
 
     path('ngoclick', views.ngoclick_view,name='ngoclick'),
     path('donarclick', views.donarclick_view,name='donarclick'),

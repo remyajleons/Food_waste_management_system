@@ -86,6 +86,8 @@ def afterlogin_view(request):
         return redirect('donar-dashboard')
     elif is_volunteer(request.user):
         return redirect('volunteer-dashboard')
+    else:
+        return redirect('/admin/')
 
 # ------------------- NGO VIEWS -------------------
 
@@ -287,6 +289,13 @@ def contactus_view(request):
 
 @login_required
 def raise_complaint_view(request):
+    if is_ngo(request.user):
+        base_template = 'ngobase.html'
+    elif is_donar(request.user):
+        base_template = 'donarbase.html'
+    else:
+        base_template = 'volunteerbase.html'
+
     if request.method == "POST":
         message = request.POST.get('message')
         models.Complaint.objects.create(
@@ -296,13 +305,24 @@ def raise_complaint_view(request):
         messages.success(request, "Complaint Submitted Successfully!")
         return redirect('my-complaints')
 
-    return render(request, 'raise_complaint.html')
+    return render(request, 'raise_complaint.html', {'base_template': base_template})
 
 
 @login_required
 def my_complaints_view(request):
     complaints = models.Complaint.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'my_complaints.html', {'complaints': complaints})
+
+    if is_ngo(request.user):
+        base_template = 'ngobase.html'
+    elif is_donar(request.user):
+        base_template = 'donarbase.html'
+    else:
+        base_template = 'volunteerbase.html'
+
+    return render(request, 'my_complaints.html', {
+        'complaints': complaints,
+        'base_template': base_template
+    })
 
 @login_required
 @user_passes_test(is_volunteer)

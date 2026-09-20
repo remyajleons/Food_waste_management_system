@@ -24,13 +24,15 @@ class NGOExtra(models.Model):
     @property
     def get_name(self):
         return self.user.first_name
+    def __str__(self):
+        return self.get_name
 
 class DonarExtra(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     company_name = models.CharField(max_length=191)
     address = models.TextField()
     mobile = models.CharField(max_length=40)
-    email = models.CharField(max_length=40)
+    email = models.EmailField(max_length=40)
     share_contact = models.BooleanField(default=True)
 
     food_category = models.CharField(max_length=20, choices=FOOD_CATEGORIES, default='Veg')
@@ -41,6 +43,8 @@ class DonarExtra(models.Model):
     @property
     def get_name(self):
         return f"{self.user.first_name} {self.user.last_name}"
+    def __str__(self):
+        return self.get_name
 
 
 # ---------------- Donation Models ----------------
@@ -71,7 +75,7 @@ class Donation(models.Model):
     food_category = models.CharField(max_length=20, choices=FOOD_CATEGORIES, default='Veg')
     state = models.CharField(max_length=50, default='Kerala')
     assigned_volunteer = models.ForeignKey('Volunteer', null=True, blank=True, on_delete=models.SET_NULL)
-
+    
     def __str__(self):
         return f"{self.foodName} by {self.username}"
 
@@ -105,6 +109,8 @@ class Notice(models.Model):
     date = models.DateField(auto_now=True)
     by = models.CharField(max_length=20, null=True, default='food')
     message = models.CharField(max_length=500)
+    def __str__(self):
+        return f"{self.message} by {self.by}"
 
 class Complaint(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
