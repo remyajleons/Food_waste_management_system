@@ -24,7 +24,7 @@ STATIC_DIR=os.path.join(BASE_DIR,'static')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '(9u1n4mtpr_0+onmagrye0jl68dqc^g!br_d2x&=w*ln3_fl=g'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-only-change-me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -152,8 +152,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'justfortestingweb1@gmail.com' # this email will be used to send emails
-EMAIL_HOST_PASSWORD = 'Maruti800' # host email password required
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # this email will be used to send messages from website contact us page
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # this is the password of above email id
 # now sign in with your host gmail account in your browser
 # open following link and turn it ON
 # https://myaccount.google.com/lesssecureapps
